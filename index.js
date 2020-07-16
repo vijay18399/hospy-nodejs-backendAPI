@@ -78,7 +78,7 @@ app.post('/auth', function (req, res) {
         user.comparePassword(req.body.password, (err, isMatch) => {
             if (isMatch && !err) {
                 return res.status(200).json({
-                    token: createToken2(user)
+                    token: createToken(user)
                 });
             } else {
                 return res.status(400).json({ msg: ' username and password don\'t match.' });
