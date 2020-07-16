@@ -56,14 +56,17 @@ app.post('/users', function (req, res) {
         if (staff) {
             return res.status(400).json({ 'msg': 'account already exists for current staff username' });
         }
-        req.body.createdAt = new Date;
-        let newUser = User(req.body);
-        newUser.save((err, user) => {
-            if (err) {
-                return res.status(400).json({ 'msg': err });
-            }
-            return res.status(201).json(user);
-        });
+        else{
+            req.body.createdAt = new Date;
+            let newUser = User(req.body);
+            newUser.save((err, user) => {
+                if (err) {
+                    return res.status(400).json({ 'msg': err });
+                }
+                return res.status(201).json(user);
+            });
+        }
+ 
     });
 })
 
