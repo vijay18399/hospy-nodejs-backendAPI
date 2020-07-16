@@ -13,7 +13,7 @@ var jwtSecret = "some secret"
 
 function createToken(user) {
     return jwt.sign(
-        { id: user._id, sid: user.sid, name: user.name, profession: user.profession, password: user.password },
+        { id: user._id, username: user.username, profession: user.profession, password: user.password },
         jwtSecret,
         {
             expiresIn: 86400 // 86400 expires in 24 hours
@@ -21,15 +21,7 @@ function createToken(user) {
     );
 }
 
-function createToken2(user) {
-    return jwt.sign(
-        { id: user._id, email: user.email, password: user.password },
-        jwtSecret,
-        {
-            expiresIn: 86400 // 86400 expires in 24 hours
-        }
-    );
-}
+
 
 mongoose.connect('mongodb://vijay:vijay18399@ds149676.mlab.com:49676/chat?retryWrites=false', {
     useNewUrlParser: true,
@@ -57,12 +49,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.post('/users', function (req, res) {
-    User.findOne({ email: req.body.email }, (err, staff) => {
+    User.findOne({ username: req.body.username }, (err, staff) => {
         if (err) {
             return res.status(400).json({ 'msg': err });
         }
         if (staff) {
-            return res.status(400).json({ 'msg': 'account already exists for current staff email' });
+            return res.status(400).json({ 'msg': 'account already exists for current staff username' });
         }
         req.body.createdAt = new Date;
         let newUser = User(req.body);
