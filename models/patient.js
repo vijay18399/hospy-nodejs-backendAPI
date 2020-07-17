@@ -38,8 +38,8 @@ var PatientSchema = new mongoose.Schema({
     system_status:{
         type: String
     },
-    createdAt: String,
-    LastUpdatedAt: String,
+    createdAt: Date,
+    LastUpdatedAt: Date,
     UpdatedBy: Object,
     Shifts:Array,
     isDischarged: { type: Boolean, default: false }
