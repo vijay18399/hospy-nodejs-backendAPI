@@ -57,7 +57,7 @@ app.post('/users', function (req, res) {
             return res.status(400).json({ 'msg': 'account already exists for current staff username' });
         }
         else{
-            req.body.createdAt = new Date;
+            req.body.createdAt = new Date().toDateString();
             let newUser = User(req.body);
             newUser.save((err, user) => {
                 if (err) {
@@ -130,7 +130,7 @@ app.get('/patients', function (req, res) {
       });
     });
 app.post('/patients', function (req, res) {
-    req.body.createdAt = new Date;
+    req.body.createdAt = new Date().toDateString();
     let newPatient = Patient(req.body);
     newPatient.save(function(err, data) {
       if (err) {
@@ -153,7 +153,7 @@ app.post('/patients', function (req, res) {
   });
 
   app.put('/patient/:_id', function (req, res) {
-      req.body.LastUpdatedAt = new Date;
+      req.body.LastUpdatedAt = new Date().toDateString();
     Patient.updateOne({ _id : { $eq: req.params._id } }, req.body, (err, data) => {
         if(data){
             return res.status(201).json({ msg: 'patient Updated successfully' });

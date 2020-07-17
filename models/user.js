@@ -10,7 +10,7 @@ var UserSchema = new mongoose.Schema({
         required: true
     },
     profession : String,
-    createdAt: Date
+    createdAt: String
 
 });
 UserSchema.pre('save',  function(next) {
