@@ -10,8 +10,7 @@ var UserSchema = new mongoose.Schema({
         required: true
     },
     profession : String,
-    createdAt: Date,
-    isDeleted: { type: Boolean, default: false }
+    createdAt: Date
 
 });
 UserSchema.pre('save',  function(next) {

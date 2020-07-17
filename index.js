@@ -71,7 +71,7 @@ app.post('/users', function (req, res) {
 })
 
 app.post('/auth', function (req, res) {
-    User.findOne({ email: req.body.email }, (err, user) => {
+    User.findOne({ username: req.body.username }, (err, user) => {
         if (err) {
             return res.status(400).send({ 'msg': err });
         }
@@ -118,15 +118,7 @@ app.put('/users/:id', function (req, res) {
         }
       });
 });
-app.delete('/users', function (req, res) {
-    User.find({ isDeleted : false}).sort({'createdAt' : 1}).exec((err, user) => {
-        if (user) {
-          console.log(user);
-          return res.status(201).json(user);
-        }
-      });
-   
-});
+
 
 
 app.get('/patients', function (req, res) {

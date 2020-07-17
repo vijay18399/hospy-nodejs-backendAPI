@@ -3,20 +3,16 @@ var PatientSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        lowercase: true,
-        trim: true
     },
     uhid:{
-        type: Number,
+        type: String,
         required: true,
-        lowercase: true,
-        trim: true
+   
     },
     bed_no: {
-        type: Number,
+        type: String,
         required: true,
-        lowercase: true,
-        trim: true
+
     },
     history: {
         type: Array
