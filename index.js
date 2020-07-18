@@ -153,7 +153,7 @@ app.post('/patients', function (req, res) {
   });
 
   app.put('/patient/:_id', function (req, res) {
-      req.body.LastUpdatedAt = new Date;
+      req.body.lastUpdatedAt = new Date;
     Patient.updateOne({ _id : { $eq: req.params._id } }, req.body, (err, data) => {
         if(data){
             return res.status(201).json({ msg: 'patient Updated successfully' });
