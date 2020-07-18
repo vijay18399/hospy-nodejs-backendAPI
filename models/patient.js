@@ -9,7 +9,7 @@ var PatientSchema = new mongoose.Schema({
         required: true,
    
     },
-    bed_no: {
+    bedno: {
         type: String,
         required: true,
 
@@ -29,18 +29,16 @@ var PatientSchema = new mongoose.Schema({
     past_status:{
         type:Array
     },
-    current_status: {
+    currentstatus: {
         type: String,
-        required: true,
-        lowercase: true,
-        trim: true
+        required: true
     },
-    system_status:{
+    systemstatus:{
         type: String
     },
     createdAt: Date,
-    LastUpdatedAt: Date,
-    UpdatedBy: Object,
+    lastUpdatedAt: Date,
+    updatedBy: Object,
     Shifts:Array,
     isDischarged: { type: Boolean, default: false }
 
