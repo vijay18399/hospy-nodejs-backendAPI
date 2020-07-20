@@ -4,6 +4,7 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var Patient = require("./models/patient");
 var Shift = require("./models/shift");
+var Log = require("./models/log");
 var User = require("./models/user");
 var cors = require('cors');
 var jwt = require("jsonwebtoken");
@@ -21,7 +22,7 @@ function createToken(user) {
     );
 }
 
-
+//change mongodb url to this mongodb://127.0.0.1:27017/okok in case of remote
 
 mongoose.connect('mongodb://vijay:vijay18399@ds149676.mlab.com:49676/chat?retryWrites=false', {
     useNewUrlParser: true,
@@ -51,6 +52,7 @@ app.use(bodyParser.json());
 app.post('/users', function (req, res) {
     User.findOne({ username: req.body.username }, (err, staff) => {
         if (err) {
+            console.log(err);
             return res.status(400).json({ 'msg': err });
         }
         if (staff) {
@@ -61,6 +63,7 @@ app.post('/users', function (req, res) {
             let newUser = User(req.body);
             newUser.save((err, user) => {
                 if (err) {
+                    console.log(err);
                     return res.status(400).json({ 'msg': err });
                 }
                 return res.status(201).json(user);
@@ -73,6 +76,7 @@ app.post('/users', function (req, res) {
 app.post('/auth', function (req, res) {
     User.findOne({ username: req.body.username }, (err, user) => {
         if (err) {
+            console.log(err);
             return res.status(400).send({ 'msg': err });
         }
         if (!user) {
@@ -103,6 +107,7 @@ app.get('/users/:id', function (req, res) {
             return res.status(201).json(user);
         }
         if (err) {
+            console.log(err);
             return res.status(400).json({ msg: 'User not updated yet' });
         }
       });
@@ -114,6 +119,7 @@ app.put('/users/:id', function (req, res) {
             return res.status(201).json({ msg: 'User Updated successfully' });
         }
         if (err) {
+            console.log(err);
             return res.status(400).json({ msg: 'User not updated yet' });
         }
       });
@@ -131,12 +137,15 @@ app.get('/patients', function (req, res) {
     });
 app.post('/patients', function (req, res) {
     req.body.createdAt = new Date;
+    console.log(req.body);
     let newPatient = Patient(req.body);
     newPatient.save(function(err, data) {
       if (err) {
+        console.log(err);
         return res.status(400).json({ msg: 'patient not created yet' });
       }
       if (data) {
+        console.log(data);
         return res.status(201).json(data);
       }
     });
@@ -147,6 +156,7 @@ app.post('/patients', function (req, res) {
             return res.status(201).json(data);
         }
         if (err) {
+            console.log(err);
             return res.status(400).json({ msg: 'ID Not exists' });
         }
       });
@@ -159,6 +169,7 @@ app.post('/patients', function (req, res) {
             return res.status(201).json({ msg: 'patient Updated successfully' });
         }
         if (err) {
+            console.log(err);
             return res.status(400).json({ msg: 'patient not updated yet' });
         }
       });
@@ -173,6 +184,7 @@ app.post('/patients', function (req, res) {
             return res.status(201).json({ msg: 'patient Status made Discharged' });
         }
         if (err) {
+            console.log(err);
             return res.status(400).json({ msg: 'patient not updated yet' });
         }
       });
@@ -209,6 +221,26 @@ app.post('/patients', function (req, res) {
         });
 
 
-
+        app.post('/logs', function (req, res) {
+            req.body.time = new Date;
+            let newLog = Log(req.body);
+            newLog.save(function(err, data) {
+              if (err) {
+                  console.log(err);
+                return res.status(400).json({ msg: 'Log not created yet' });
+              }
+              if (data) {
+                return res.status(201).json(data);
+              }
+            });
+          });
+          app.get('/logforpatient/:id', function (req, res) {
+            Log.find({ patient_id : req.params.id}).sort({'time' : 1}).exec((err, log) => {
+                if (log) {
+                  console.log(log);
+                  return res.status(201).json(log);
+                }
+              });
+            });
 
 app.listen(port);

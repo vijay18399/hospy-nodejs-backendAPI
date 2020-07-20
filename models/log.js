@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
-var ShiftSchema = new mongoose.Schema({
+var LogSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
@@ -17,7 +17,7 @@ var ShiftSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    notes: {
+    description: {
         type: String
     },
     time: Date
@@ -25,4 +25,4 @@ var ShiftSchema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model('Shift', ShiftSchema);
+module.exports = mongoose.model('Log', LogSchema);
